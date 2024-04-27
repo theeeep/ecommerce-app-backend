@@ -1,24 +1,17 @@
 {
-  "compilerOptions":{ 
-      "target": "es6",
-      "moduleResolution":"node",
-      "module": "commonjs",
-      "declaration": false,
-      "noLib": false,
-      "emitDecoratorMetadata":true,
-      "experimentalDecorators":true,
-      "sourceMap": true,
-      "pretty": true,
-      "allowUnreachableCode": true,
-      "allowUnusedLabels": true,
-      "noImplicitAny": true,
-      "noImplicitReturns": false,
-      "noImplicitUseStrict":false,
-      "outDir": "dist/",
-      "baseUrl": "src/",
-      "listFiles": false,
-      "noEmitHelpers": true
-   },
+  "compilerOptions": {
+    "target": "es2016",
+    "module": "commonjs",
+    "pretty": true,
+    "outDir": "dist/",
+    "baseUrl": "src/",
+    "listFiles": false,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "skipLibCheck": true
+  },
+
   "include": ["src/**/*"],
-  "exclude": ["node_modules","dist","__test__","coverage"]
+  "exclude": ["node_modules", "dist", "__test__", "coverage"]
 }
