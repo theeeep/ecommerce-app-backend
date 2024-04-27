@@ -1,6 +1,8 @@
 import prisma from 'config/db.config';
 import { Request, Response } from 'express';
-import { hashSync } from 'bcrypt';
+import { hashSync, compareSync } from 'bcrypt';
+import * as jwt from 'jsonwebtoken';
+import { config } from 'config/config';
 
 export const signup = async (req: Request, res: Response) => {
   const { name, email, password } = req.body;
@@ -20,4 +22,22 @@ export const signup = async (req: Request, res: Response) => {
   });
 
   res.status(201).json({ message: ` User ${user.name} created`, data: user });
+};
+
+export const login = async (req: Request, res: Response) => {
+  const { email, password } = req.body;
+
+  let user = await prisma.user.findFirst({ where: { email } });
+
+  if (!user) {
+    throw Error('User does not exists!');
+  }
+
+  if (!compareSync(password, user.password)) {
+    throw Error('Incorrect Password!');
+  }
+
+  const token = jwt.sign({ userId: user.id }, config.jwt_secret);
+
+  res.status(201).json({ user: user.name, accesToken: token });
 };
