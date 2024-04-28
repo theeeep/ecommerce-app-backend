@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start:dev": "nodemon",
-    "start:prod": "node -r ts-node/register/transpile-only  -r tsconfig-paths/register ./dist/index.js",
+    "start:prod": "node -r ts-node/register/transpile-only  -r tsconfig-paths/register --files ./dist/index.js",
     "build": "tsc -p tsconfig.build.json",
     "test": "jest",
     "test:watch": "jest --watch",
