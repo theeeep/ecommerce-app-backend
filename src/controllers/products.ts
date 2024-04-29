@@ -13,3 +13,15 @@ export const createProduct = async (req: Request, res: Response) => {
   });
   res.json(product);
 };
+
+// //? ---> Update Product
+export const updateProduct = async (req: Request, res: Response) => {};
+
+// //? ---> Delete Product
+export const deleteProduct = async (req: Request, res: Response) => {};
+
+// //? ---> List Products
+export const listProducts = async (req: Request, res: Response) => {};
+
+// //? ---> Get ProductById
+export const getProductById = async (req: Request, res: Response) => {};
