@@ -1,4 +1,6 @@
 import prisma from 'config/db.config';
+import { NotFoundException } from 'exceptions/not-found';
+import { ErrorCodes } from 'exceptions/root';
 import { Request, Response } from 'express';
 
 //? ---> Create Product
@@ -15,10 +17,38 @@ export const createProduct = async (req: Request, res: Response) => {
 };
 
 // //? ---> Update Product
-export const updateProduct = async (req: Request, res: Response) => {};
+export const updateProduct = async (req: Request, res: Response) => {
+  try {
+    const product = req.body;
+    if (product.tags) {
+      product.tags = product.tags.join(', ');
+    }
+    const updateProduct = await prisma.product.update({
+      where: {
+        id: +req.params.id,
+      },
+      data: product,
+    });
+    res.status(200).json({ message: 'Product Updated!', data: product });
+  } catch (err) {
+    throw new NotFoundException('Product not found', ErrorCodes.PRODUCT_NOT_FOUND);
+  }
+};
 
 // //? ---> Delete Product
-export const deleteProduct = async (req: Request, res: Response) => {};
+export const deleteProduct = async (req: Request, res: Response) => {
+  try {
+    const productId = req.params.id;
+    const deleteProduct = await prisma.product.delete({
+      where: {
+        id: +productId,
+      },
+    });
+    res.status(200).json({ message: `Product ${productId} delete Successfully` });
+  } catch (err) {
+    throw new NotFoundException('Product not found', ErrorCodes.PRODUCT_NOT_FOUND);
+  }
+};
 
 // //? ---> List Products
 export const listProducts = async (req: Request, res: Response) => {};
