@@ -17,7 +17,7 @@ export const createProduct = async (req: Request, res: Response) => {
   res.json(product);
 };
 
-// //? ---> Update Product
+//? ---> Update Product
 export const updateProduct = async (req: Request, res: Response) => {
   try {
     const product = req.body;
@@ -36,7 +36,7 @@ export const updateProduct = async (req: Request, res: Response) => {
   }
 };
 
-// //? ---> Delete Product
+//? ---> Delete Product
 export const deleteProduct = async (req: Request, res: Response) => {
   try {
     const productId = req.params.id;
@@ -51,7 +51,7 @@ export const deleteProduct = async (req: Request, res: Response) => {
   }
 };
 
-// //? ---> List Products
+//? ---> List Products
 export const listProducts = async (req: Request, res: Response) => {
   const count = await prisma.product.count();
   const products = await prisma.product.findMany({
@@ -63,8 +63,7 @@ export const listProducts = async (req: Request, res: Response) => {
     data: products,
   });
 };
-
-// //? ---> Get ProductById
+//? ---> Get ProductById
 export const getProductById = async (req: Request, res: Response) => {
   try {
     const productId = req.params.id;

@@ -47,7 +47,7 @@ model Product {
 model Address {
   id        Int      @id @default(autoincrement())
   lineOne   String
-  lineTwo   String
+  lineTwo   String?
   city      String
   country   String
   pincode   String
@@ -56,5 +56,5 @@ model Address {
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now())
 
-  @@map("addresses")
+  @@map("address")
 }
