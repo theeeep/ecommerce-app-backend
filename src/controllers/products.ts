@@ -2,6 +2,7 @@ import prisma from 'config/db.config';
 import { NotFoundException } from 'exceptions/not-found';
 import { ErrorCodes } from 'exceptions/root';
 import { Request, Response } from 'express';
+import { number } from 'zod';
 
 //? ---> Create Product
 export const createProduct = async (req: Request, res: Response) => {
@@ -51,7 +52,29 @@ export const deleteProduct = async (req: Request, res: Response) => {
 };
 
 // //? ---> List Products
-export const listProducts = async (req: Request, res: Response) => {};
+export const listProducts = async (req: Request, res: Response) => {
+  const count = await prisma.product.count();
+  const products = await prisma.product.findMany({
+    skip: Number(req.query.skip) || 0,
+    take: 5,
+  });
+  res.json({
+    count,
+    data: products,
+  });
+};
 
 // //? ---> Get ProductById
-export const getProductById = async (req: Request, res: Response) => {};
+export const getProductById = async (req: Request, res: Response) => {
+  try {
+    const productId = req.params.id;
+    const getProductById = await prisma.product.findFirstOrThrow({
+      where: {
+        id: +productId,
+      },
+    });
+    res.status(200).json(getProductById);
+  } catch (err) {
+    throw new NotFoundException('Product not found', ErrorCodes.PRODUCT_NOT_FOUND);
+  }
+};
