@@ -6,9 +6,9 @@ import authMiddleware from 'middlewares/auth';
 
 const userAddressRoutes: Router = Router();
 
-userAddressRoutes.post('/address', [authMiddleware, adminMiddleware], errorHandler(addAddress));
-userAddressRoutes.put('/address/:id', [authMiddleware, adminMiddleware], errorHandler(updateAddress));
-userAddressRoutes.delete('/address/:id', [authMiddleware, adminMiddleware], errorHandler(deleteAddress)); // TODO : Implement
-userAddressRoutes.get('/address', [authMiddleware, adminMiddleware], errorHandler(listAddress));
+userAddressRoutes.post('/address', [authMiddleware], errorHandler(addAddress));
+userAddressRoutes.put('/address/:id', [authMiddleware], errorHandler(updateAddress));
+userAddressRoutes.delete('/address/:id', [authMiddleware], errorHandler(deleteAddress)); // TODO : Implement
+userAddressRoutes.get('/address', [authMiddleware], errorHandler(listAddress));
 
 export default userAddressRoutes;

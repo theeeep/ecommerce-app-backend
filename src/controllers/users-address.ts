@@ -1,4 +1,3 @@
-import { User } from '@prisma/client';
 import prisma from 'config/db.config';
 import { NotFoundException } from 'exceptions/not-found';
 import { ErrorCodes } from 'exceptions/root';
@@ -8,21 +7,10 @@ import { AddressSchema } from 'schema/users';
 // ? ---> Add Address
 export const addAddress = async (req: Request, res: Response) => {
   AddressSchema.parse(req.body);
-  let user: User;
-  try {
-    user = await prisma.user.findFirstOrThrow({
-      where: {
-        id: req.body.userId,
-      },
-    });
-  } catch (err) {
-    throw new NotFoundException('User not found!', ErrorCodes.USER_NOT_FOUND);
-  }
-
   const address = await prisma.address.create({
     data: {
       ...req.body,
-      user: user.id,
+      userId: req.user.id,
     },
   });
   res.json(address);
@@ -32,7 +20,25 @@ export const addAddress = async (req: Request, res: Response) => {
 export const updateAddress = async (req: Request, res: Response) => {};
 
 // ? ---> Delete Address
-export const deleteAddress = async (req: Request, res: Response) => {};
+export const deleteAddress = async (req: Request, res: Response) => {
+  try {
+    await prisma.address.delete({
+      where: {
+        id: +req.params.id,
+      },
+    });
+    res.status(200).json({ message: 'Address Deleted Successfully' });
+  } catch (err) {
+    throw new NotFoundException('Address not found!', ErrorCodes.ADDRESS_NOT_FOUND);
+  }
+};
 
 // ? ---> List Address
-export const listAddress = async (req: Request, res: Response) => {};
+export const listAddress = async (req: Request, res: Response) => {
+  const addresses = await prisma.address.findMany({
+    where: {
+      userId: req.user.id,
+    },
+  });
+  res.status(200).json(addresses);
+};
