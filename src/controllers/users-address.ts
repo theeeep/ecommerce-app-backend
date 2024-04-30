@@ -1,5 +1,6 @@
 import { Address } from '@prisma/client';
 import prisma from 'config/db.config';
+import { BadRequestsException } from 'exceptions/bad-requests';
 import { NotFoundException } from 'exceptions/not-found';
 import { ErrorCodes } from 'exceptions/root';
 import { Request, Response } from 'express';
@@ -58,6 +59,9 @@ export const updateAddress = async (req: Request, res: Response) => {
     } catch (err) {
       throw new NotFoundException('Shipping Address not found!', ErrorCodes.ADDRESS_NOT_FOUND);
     }
+    if (shippingAddress.userId != req.user.id) {
+      throw new BadRequestsException('Addres does not belongs to user', ErrorCodes.ADDRESS_DOES_NOT_BELONG, 400);
+    }
   }
   if (validatedData.defaultBillingAddress) {
     try {
@@ -69,13 +73,16 @@ export const updateAddress = async (req: Request, res: Response) => {
     } catch (err) {
       throw new NotFoundException('Billing Address not found!', ErrorCodes.ADDRESS_NOT_FOUND);
     }
+    if (billingAddress.userId != req.user.id) {
+      throw new BadRequestsException('Addres does not belongs to user', ErrorCodes.ADDRESS_DOES_NOT_BELONG, 400);
+    }
   }
 
   const updatedUser = await prisma.user.update({
     where: {
       id: req.user.id,
     },
-    data: !validatedData,
+    data: validatedData,
   });
   res.json(updatedUser);
 };
