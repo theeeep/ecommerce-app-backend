@@ -1,4 +1,6 @@
 import prisma from 'config/db.config';
+import { NotFoundException } from 'exceptions/not-found';
+import { ErrorCodes } from 'exceptions/root';
 import { Request, Response } from 'express';
 
 export const createOrder = async (req: Request, res: Response) => {
@@ -79,6 +81,51 @@ export const createOrder = async (req: Request, res: Response) => {
     });
   });
 };
-export const listOrders = async (req: Request, res: Response) => {};
-export const cancelOrder = async (req: Request, res: Response) => {};
-export const getOrderById = async (req: Request, res: Response) => {};
+export const listOrders = async (req: Request, res: Response) => {
+  const ordersList = await prisma.order.findMany({
+    where: {
+      userId: req.user.id,
+    },
+  });
+  res.json(ordersList);
+};
+export const cancelOrder = async (req: Request, res: Response) => {
+  // 1. wrap it inside tranaction
+  // 2. check if the users is cancelling its own order
+
+  try {
+    const order = await prisma.order.update({
+      where: {
+        id: +req.params.id,
+      },
+      data: {
+        status: 'CANCELLED',
+      },
+    });
+    await prisma.orderEvent.create({
+      data: {
+        orderId: order.id,
+        status: 'CANCELLED',
+      },
+    });
+    res.json(order);
+  } catch (err) {
+    throw new NotFoundException('Order not found', ErrorCodes.ORDER_NOT_FOUND);
+  }
+};
+export const getOrderById = async (req: Request, res: Response) => {
+  try {
+    const orderItem = await prisma.order.findFirstOrThrow({
+      where: {
+        id: +req.params.id,
+      },
+      include: {
+        products: true,
+        events: true,
+      },
+    });
+    res.json(orderItem);
+  } catch (err) {
+    throw new NotFoundException('Order not found', ErrorCodes.ORDER_NOT_FOUND);
+  }
+};
