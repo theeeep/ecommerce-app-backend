@@ -14,14 +14,6 @@ export const createOrder = async (req: Request, res: Response) => {
   //? Notes: 8. Empty the cart
 
   return await prisma.$transaction(async tx => {
-    // 1. to create a transaction
-    // 2. to list all the cart items and proceed if cart is not empty
-    // 3. calculate the total amount
-    // 4. fetch address of user
-    // 5. to define computed field for formatted address on address module
-    // 6. we will create a order and order productsorder products
-    // 7. create event
-    // 8. to empty the cart
     return await prisma.$transaction(async tx => {
       const cartItems = await tx.cartItem.findMany({
         where: {
@@ -126,6 +118,67 @@ export const getOrderById = async (req: Request, res: Response) => {
     });
     res.json(orderItem);
   } catch (err) {
-    throw new NotFoundException('Order not found', ErrorCodes.ORDER_NOT_FOUND);
+    throw new NotFoundException('Order not found!', ErrorCodes.ORDER_NOT_FOUND);
   }
+};
+
+export const listAllOrders = async (req: Request, res: Response) => {
+  let whereClause = {};
+
+  const status = req.query.status;
+  if (status) {
+    whereClause = {
+      status,
+    };
+  }
+
+  const orders = await prisma.order.findMany({
+    where: whereClause,
+    skip: +req.query.skip || 0,
+    take: 5,
+  });
+  res.json(orders);
+};
+export const changeStatus = async (req: Request, res: Response) => {
+  // wrap it inside transaction
+  try {
+    const orderStatus = await prisma.order.update({
+      where: {
+        id: +req.params.id,
+      },
+      data: {
+        status: req.body.status,
+      },
+    });
+
+    await prisma.orderEvent.create({
+      data: {
+        orderId: orderStatus.id,
+        status: req.body.status,
+      },
+    });
+    res.json(orderStatus);
+  } catch (err) {
+    throw new NotFoundException('Order not found!', ErrorCodes.ORDER_NOT_FOUND);
+  }
+};
+export const listUserOrders = async (req: Request, res: Response) => {
+  let whereClause: any = {
+    userId: +req.params.id,
+  };
+
+  const status = req.params.status;
+  if (status) {
+    whereClause = {
+      ...whereClause,
+      status,
+    };
+  }
+
+  const userOrders = await prisma.order.findMany({
+    where: whereClause,
+    skip: +req.query.skip || 0,
+    take: 5,
+  });
+  res.json(userOrders);
 };
