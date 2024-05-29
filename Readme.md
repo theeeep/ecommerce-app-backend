@@ -77,7 +77,7 @@ This is a fully-featured E-Commerce Application built with TypeScript, Express.j
 
 ### Authentication
 
-- **POST /api/auth/register**: Register a new user
+- **POST /api/auth/signup**: Register a new user
 - **POST /api/auth/login**: Login a user
 
 ### Products
