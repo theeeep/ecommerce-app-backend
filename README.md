@@ -75,6 +75,7 @@ This is a fully-featured E-Commerce Application built with TypeScript, Express.j
 
 ## Project Structure
 
+```
 .
 ├── README.md
 ├── dist
@@ -99,6 +100,8 @@ This is a fully-featured E-Commerce Application built with TypeScript, Express.j
 │   └── types
 ├── tsconfig.build.json
 └── tsconfig.json
+
+```
 
 12 directories, 12 files
 
