@@ -10,8 +10,6 @@ This is a fully-featured E-Commerce Application built with TypeScript, Express.j
 - Product listing and management
 - Shopping cart functionality
 - Order processing and management
-- Responsive design
--
 
 ## Tech Stack
 
@@ -76,6 +74,33 @@ This is a fully-featured E-Commerce Application built with TypeScript, Express.j
 - `npm test`: Runs tests using Jest
 
 ## Project Structure
+
+.
+├── README.md
+├── dist
+│   └── index.js
+├── eslint.config.mjs
+├── jest.config.ts
+├── nodemon.json
+├── package-lock.json
+├── package.json
+├── prisma
+│   ├── migrations
+│   └── schema.prisma
+├── src
+│   ├── config
+│   ├── controllers
+│   ├── error-handler.ts
+│   ├── exceptions
+│   ├── index.ts
+│   ├── middlewares
+│   ├── routes
+│   ├── schema
+│   └── types
+├── tsconfig.build.json
+└── tsconfig.json
+
+12 directories, 12 files
 
 ## Contributing
 
