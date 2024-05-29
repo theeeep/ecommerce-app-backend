@@ -1,4 +1,3 @@
-
 # E-Commerce App Backend
 
 ## Overview
@@ -74,10 +73,32 @@ This is a fully-featured E-Commerce Application built with TypeScript, Express.j
 - `npm run build`: Starts the built project
 - `npm test`: Runs tests using Jest
 
+## API Endpoints
+
+### Authentication
+
+- **POST /api/auth/register**: Register a new user
+- **POST /api/auth/login**: Login a user
+
+### Products
+
+- **GET /api/products**: Get all products
+- **GET /api/products/:id**: Get a product by ID
+- **POST /api/products**: Create a new product
+- **PUT /api/products/:id**: Update a product by ID
+- **DELETE /api/products/:id**: Delete a product by ID
+
+### Orders
+
+- **GET /api/orders**: Get all orders
+- **GET /api/orders/:id**: Get an order by ID
+- **POST /api/orders**: Create a new order
+- **PUT /api/orders/:id**: Update an order by ID
+- **DELETE /api/orders/:id**: Delete an order by ID
+
 ## Project Structure
 
 ```
-.
 ├── README.md
 ├── dist
 │   └── index.js
@@ -117,4 +138,3 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 ## Contact
 
 For any inquiries or support, feel free to contact me at [itz.deeepak@gmail.com] or open an issue on GitHub.
-
