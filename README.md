@@ -1,4 +1,4 @@
-# E-Commerce Application
+# E-Commerce App Backend
 
 ## Overview
 
@@ -38,7 +38,7 @@ This is a fully-featured E-Commerce Application built with TypeScript, Express.j
 1. Clone the repository:
     ```bash
     git clone https://github.com/theeeep/ecommerce-app-backend
-    cd ecommerce-application
+    cd ecommerce-app-backend
     ```
 
 2. Install dependencies:
