@@ -36,7 +36,7 @@ This is a fully-featured E-Commerce Application built with TypeScript, Express.j
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/theeeep/ecommerce-app-backend
+   git clone https://github.com/theeeep/ecommerce-app-backend.git
    cd ecommerce-app-backend
    ```
 
@@ -51,8 +51,8 @@ This is a fully-featured E-Commerce Application built with TypeScript, Express.j
    - Create a PostgreSQL database
    - Update the `.env` file with your database connection details:
 
-     ```
-     DATABASE_URL=postgresql://user:password@localhost:5432/mydatabase
+     ``` bash
+     DATABASE_URL=postgresql://user:password@localhost:5432/ecommerce-backend?schema=public"
      ```
 
 4. Run the Prisma migrations to set up the database schema:
@@ -62,6 +62,7 @@ This is a fully-featured E-Commerce Application built with TypeScript, Express.j
    ```
 
 5. Start the development server:
+
    ```bash
    npm run dev
    ```
@@ -98,7 +99,7 @@ This is a fully-featured E-Commerce Application built with TypeScript, Express.j
 
 ## Project Structure
 
-```
+``` bash
 ├── README.md
 ├── dist
 │   └── index.js
@@ -122,7 +123,6 @@ This is a fully-featured E-Commerce Application built with TypeScript, Express.j
 │   └── types
 ├── tsconfig.build.json
 └── tsconfig.json
-
 ```
 
 12 directories, 12 files
